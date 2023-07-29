@@ -21,4 +21,4 @@ RUN pip install git+https://github.com/JaidedAI/EasyOCR.git
 
 COPY . .
 
-CMD hypercorn main:app --host 0.0.0.0 --port $PORT
+CMD hypercorn main:app --bind "[::]:$PORT"
