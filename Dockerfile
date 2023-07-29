@@ -21,4 +21,4 @@ RUN pip install git+https://github.com/JaidedAI/EasyOCR.git
 
 COPY . .
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "${PORT_ENV}"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "443"]
