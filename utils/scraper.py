@@ -26,11 +26,10 @@ def get_element(xpath, driver, by=By.XPATH):
         )
         return element
     except WebDriverException as e:
-        logger.error(f"closing and quiting driver because of: {e}")
-        raise HTTPException(status_code=500, detail="Could not get element 🤬")
+        logger.error(f"quiting driver because of: {e}")
     finally:
-        driver.close()
         driver.quit()
+        raise HTTPException(status_code=500, detail="Could not get element 🤬")
 
 
 
@@ -56,7 +55,7 @@ def get_this_weeks_zona_image_url():
     try:
         driver.get(facebook_zona_url)
         last_img = get_element(facebook_last_img_xpath, driver)
-        time.sleep(1.5)
+
         url_to_quality_image = last_img.get_attribute("href")
         if "&__cft__" in url_to_quality_image:
             logger.debug("junk found, removing it 🤮")
@@ -68,13 +67,11 @@ def get_this_weeks_zona_image_url():
         quality_image = get_element(
             facebook_quality_image_xpath_css, driver, By.CSS_SELECTOR
         )
-        time.sleep(1.5)
 
         # thats necessary because the image is lazy loaded or something 😢
         quality_image = get_element(
             facebook_quality_image_xpath_css, driver, By.CSS_SELECTOR
         )
-        time.sleep(1.5)
 
 
         html_content = driver.page_source
@@ -82,13 +79,11 @@ def get_this_weeks_zona_image_url():
 
         logger.debug(f"quality_image: {quality_image.get_attribute('src')}")
         url = quality_image.get_attribute("src")
-        driver.close()
         driver.quit()
 
         return url
     except Exception as e:
-        logger.error(f"closing and quiting driver because of: {e}")
-        raise HTTPException(status_code=500, detail="Could not get image url 🤬")
+        logger.error(f"quiting driver because of: {e}")
     finally:
-        driver.close()
         driver.quit()
+        raise HTTPException(status_code=500, detail="Could not get image url 🤬")
