@@ -24,6 +24,7 @@ def get_element(xpath, driver, by=By.XPATH):
         )
     except WebDriverException as e:
         logger.error(e)
+        driver.quit()
         raise HTTPException(status_code=500, detail="Could not get element 🤬")
     return element
 
