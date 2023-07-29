@@ -17,19 +17,15 @@ facebook_quality_image_xpath_css = ".x85a59c.x193iq5w.x4fas0m.x19kjcj4"
 def get_element(xpath, driver, by=By.XPATH):
     logger.debug(f"getting element ➡️: {xpath}")
     element = None
-    try:
-        element = WebDriverWait(driver, 10).until(
-            lambda x: x.find_element(
-                by,
-                xpath,
-            )
+
+    element = WebDriverWait(driver, 10).until(
+        lambda x: x.find_element(
+            by,
+            xpath,
         )
-        return element
-    except WebDriverException as e:
-        logger.error(f"quiting driver because of: {e}")
-    finally:
-        driver.quit()
-        raise HTTPException(status_code=500, detail="Could not get element 🤬")
+    )
+
+    return element
 
 
 
@@ -79,11 +75,10 @@ def get_this_weeks_zona_image_url():
 
         logger.debug(f"quality_image: {quality_image.get_attribute('src')}")
         url = quality_image.get_attribute("src")
-        driver.quit()
 
-        return url
     except Exception as e:
         logger.error(f"quiting driver because of: {e}")
+        raise HTTPException(status_code=500, detail="Could not get image url 🤬")
     finally:
         driver.quit()
-        raise HTTPException(status_code=500, detail="Could not get image url 🤬")
+        return url
