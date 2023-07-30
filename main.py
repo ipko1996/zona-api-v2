@@ -69,10 +69,12 @@ def get_new_menu(current_week, db):
     if last_week_menu and is_same_jpg(url, last_week_menu["url"]):
         logger.debug("menu not updated yet")
         # todo: find out what to do if the menu is not updated
-        raise HTTPException(status_code=404,
-                            detail="Menu not updated yet 🥵 🤤"
-                            + "\n"
-                            + "Meanwhile here is a good youtube video: https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+        raise HTTPException(
+            status_code=404,
+            detail="Menu not updated yet 🥵 🤤"
+            + "\n"
+            + "Meanwhile here is a good youtube video: https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        )
 
     meal_list = get_meal_list(read_data(url))
     temp = {
@@ -103,20 +105,22 @@ def get_weekly_meal():
     logger.debug("trying to find menu in db 🕵️")
     weekly_meal = db["meals"].find_one({"week": current_week})
 
-    if weekly_meal:
-        logger.debug("found menu in db, returning it 🏎️")
-        return weekly_meal
-    else:
-        logger.debug("menu not found in db, getting new one 🦥")
-        try:
+    try:
+        if weekly_meal:
+            logger.debug("found menu in db, returning it 🏎️")
+            return weekly_meal
+        else:
+            logger.debug("menu not found in db, getting new one 🦥")
             new_menu = get_new_menu(current_week, db)
             return new_menu
-        except Exception as e:
-            logger.error(f"error happened {e}")
-            raise HTTPException(status_code=500, detail="Something went wrong getting the menu ¯\_(ツ)_/¯")
-        finally:
-            collected = gc.collect()
-            logger.debug(f"Garbage collected:  {collected}")
+    except Exception as e:
+        logger.error(f"error happened {e}")
+        raise HTTPException(
+            status_code=500, detail="Something went wrong getting the menu ¯\_(ツ)_/¯"
+        )
+    finally:
+        collected = gc.collect()
+        logger.debug(f"Garbage collected:  {collected}")
 
 
 @app.get("/weekly_meal/table", response_class=HTMLResponse)
@@ -132,7 +136,8 @@ def get_weekly_meal_table():
                 "<h1>Could not parse the menu</h1>",
                 "<h2>Must be a hell of an image...</h2>"
                 "<a href='" + weekly_meal["url"] + "'>Link to image</a>",
-            ), status_code=418
+            ),
+            status_code=418,
         )
 
     # creating table
@@ -161,9 +166,9 @@ def get_weekly_meal_table():
 
     table.add_row(["URL", "<a target='_blank' href=" + url + ">" + url_text + "</a>"])
     table.add_row(["WEEK_ID", week])
-    
-    table.align["Meal"] = "l" # Left align city names
-    table.align["Price"] = "r" # Right align everything else
+
+    table.align["Meal"] = "l"  # Left align city names
+    table.align["Price"] = "r"  # Right align everything else
 
     table.format = True
     table.hrules = ALL
@@ -181,4 +186,6 @@ def get_weekly_meal_table():
 
     html_text += html_table_text
 
+    collected = gc.collect()
+    logger.debug(f"Garbage collected:  {collected}")
     return HTMLResponse(content=html_text, status_code=200)

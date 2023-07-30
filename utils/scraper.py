@@ -29,7 +29,6 @@ def get_element(xpath, driver, by=By.XPATH):
     return element
 
 
-
 def create_driver():
     logger.debug("create_driver 🌍")
     options = webdriver.ChromeOptions()
@@ -69,7 +68,6 @@ def get_this_weeks_zona_image_url():
         quality_image = get_element(
             facebook_quality_image_xpath_css, driver, By.CSS_SELECTOR
         )
-
 
         html_content = driver.page_source
         # logger.debug(f"html_content: {html_content}")
