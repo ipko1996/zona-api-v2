@@ -1,3 +1,4 @@
+import gc
 import re
 
 import easyocr
@@ -87,4 +88,7 @@ def get_meal_list(result):
         # raise HTTPException(status_code=500, detail="Could not parse menu")
         meal_list["error_while_parsing"] = True
         return meal_list
-    return meal_list
+    finally:
+        collected = gc.collect()
+        logger.debug(f"Garbage collected:  {collected}")
+        return meal_list

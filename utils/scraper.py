@@ -1,3 +1,4 @@
+import gc
 import time
 
 from fastapi import HTTPException
@@ -89,4 +90,6 @@ def get_this_weeks_zona_image_url():
         last_img = None
         quality_image = None
         driver = None
+        collected = gc.collect()
+        logger.debug(f"Garbage collected:  {collected}")
         return url
