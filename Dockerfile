@@ -17,18 +17,11 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Install EasyOCR from GitHub
 RUN pip install git+https://github.com/JaidedAI/EasyOCR.git
 
-# Predownload the model file to speed up the first run
-# Create the ~/.EasyOCR/model directory
-RUN mkdir -p /home/seluser/.EasyOCR/model
-
-# Download the model file and place it in the ~/.EasyOCR/model folder
-RUN wget -O /home/seluser/.EasyOCR/model/latin.zip https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/latin.zip
-
-# Unzip the model file
-RUN unzip /home/seluser/.EasyOCR/model/latin.zip -d /home/seluser/.EasyOCR/model/
-
-# Set the correct permissions for the model folder
-RUN chown -R seluser:seluser /home/seluser/.EasyOCR
+# Create the ~/.EasyOCR/model directory and download the model file into it
+RUN mkdir -p /home/seluser/.EasyOCR/model && \
+    wget -O /home/seluser/.EasyOCR/model/latin.zip https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/latin.zip && \
+    unzip /home/seluser/.EasyOCR/model/latin.zip -d /home/seluser/.EasyOCR/model/ && \
+    chown -R seluser:seluser /home/seluser/.EasyOCR
 
 COPY . .
 
