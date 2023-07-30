@@ -2,7 +2,7 @@ import time
 
 from fastapi import HTTPException
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import WebDriverException, InvalidSessionIdException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from loguru import logger
@@ -76,6 +76,10 @@ def get_this_weeks_zona_image_url():
         logger.debug(f"quality_image: {quality_image.get_attribute('src')}")
         url = quality_image.get_attribute("src")
 
+    except InvalidSessionIdException as e:
+        logger.error(f"invalid session id error happened {e}")
+    except WebDriverException as e:
+        logger.error(f"webdriver error happened {e}")
     except Exception as e:
         logger.error(f"error happened {e}")
     finally:

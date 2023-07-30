@@ -107,7 +107,12 @@ def get_weekly_meal():
         return weekly_meal
     else:
         logger.debug("menu not found in db, getting new one 🦥")
-        return get_new_menu(current_week, db)
+        try:
+            new_menu = get_new_menu(current_week, db)
+            return new_menu
+        except Exception as e:
+            logger.error(f"error happened {e}")
+            raise HTTPException(status_code=500, detail="Something went wrong getting the menu ¯\_(ツ)_/¯")
 
 
 @app.get("/weekly_meal/table", response_class=HTMLResponse)
