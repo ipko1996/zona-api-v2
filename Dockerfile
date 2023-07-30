@@ -21,15 +21,16 @@ RUN pip install git+https://github.com/JaidedAI/EasyOCR.git
 RUN mkdir -p /home/seluser/.EasyOCR/model && \
     wget -O /home/seluser/.EasyOCR/model/craft_mlt_25k.zip https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip && \
     unzip /home/seluser/.EasyOCR/model/craft_mlt_25k.zip -d /home/seluser/.EasyOCR/model/ && \
-    rm /home/seluser/.EasyOCR/model/craft_mlt_25k.zip && \
+    rm /home/seluser/.EasyOCR/model/craft_mlt_25k.zip
 
 # Download the latin_g2.zip file directly and extract its contents to ~/.EasyOCR/model folder
 RUN wget -O /home/seluser/.EasyOCR/model/latin_g2.zip https://github.com/JaidedAI/EasyOCR/releases/download/v1.3/latin_g2.zip && \
     unzip /home/seluser/.EasyOCR/model/latin_g2.zip -d /home/seluser/.EasyOCR/model/ && \
-    rm /home/seluser/.EasyOCR/model/latin_g2.zip && \
+    rm /home/seluser/.EasyOCR/model/latin_g2.zip
 
 RUN chown -R seluser:seluser /home/seluser/.EasyOCR
 
+# Copy the current directory content into the container's working directory
 COPY . .
 
 CMD uvicorn main:app --host 0.0.0.0 --port $PORT
