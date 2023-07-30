@@ -17,6 +17,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Install EasyOCR from GitHub
 RUN pip install git+https://github.com/JaidedAI/EasyOCR.git
 
+# Predownload the model file to speed up the first run
 # Create the ~/.EasyOCR/model directory
 RUN mkdir -p /home/seluser/.EasyOCR/model
 
