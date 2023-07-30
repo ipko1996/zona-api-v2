@@ -77,8 +77,12 @@ def get_this_weeks_zona_image_url():
         url = quality_image.get_attribute("src")
 
     except Exception as e:
-        logger.error(f"quiting driver because of: {e}")
-        raise HTTPException(status_code=500, detail="Could not get image url 🤬")
+        logger.error(f"error happened {e}")
     finally:
+        logger.debug("quiting driver... 🏁")
+        driver.close()
         driver.quit()
+        last_img = None
+        quality_image = None
+        driver = None
         return url

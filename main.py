@@ -56,6 +56,11 @@ def is_same_jpg(url1, url2):
 def get_new_menu(current_week, db):
     logger.debug("getting new menu 🍽️")
     url = get_this_weeks_zona_image_url()
+
+    # if url is emty raise error
+    if not url:
+        raise HTTPException(status_code=500, detail="Could not get image url 🤬")
+
     # if the url is same as the last one, the restaurant didn't update the menu yet
     logger.debug("checking if menu is updated 🤔")
     last_week = get_previous_year_and_week_string()
