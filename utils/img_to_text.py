@@ -19,7 +19,7 @@ stop_word = "MENU"
 
 def read_data(img):
     logger.debug("reading data...")
-    reader = easyocr.Reader(["hu"])
+    reader = easyocr.Reader(["hu"], gpu=False, download_enabled=False)
     result = reader.readtext(
         image=img,
         detail=0,
