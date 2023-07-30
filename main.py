@@ -1,6 +1,7 @@
 import datetime
 import html
 import re
+import gc
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
@@ -113,6 +114,9 @@ def get_weekly_meal():
         except Exception as e:
             logger.error(f"error happened {e}")
             raise HTTPException(status_code=500, detail="Something went wrong getting the menu ¯\_(ツ)_/¯")
+        finally:
+            collected = gc.collect()
+            logger.debug(f"Garbage collected:  {collected}")
 
 
 @app.get("/weekly_meal/table", response_class=HTMLResponse)
