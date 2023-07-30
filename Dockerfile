@@ -21,7 +21,6 @@ RUN pip install git+https://github.com/JaidedAI/EasyOCR.git
 RUN mkdir -p /home/seluser/.EasyOCR/model && \
     wget -O /home/seluser/.EasyOCR/model/craft_mlt_25k.zip https://github.com/JaidedAI/EasyOCR/releases/download/pre-v1.1.6/craft_mlt_25k.zip && \
     unzip /home/seluser/.EasyOCR/model/craft_mlt_25k.zip -d /home/seluser/.EasyOCR/model/ && \
-    mv /home/seluser/.EasyOCR/model/craft_mlt_25k/craft_mlt_25k.pth /home/seluser/.EasyOCR/model/ && \
     rm /home/seluser/.EasyOCR/model/craft_mlt_25k.zip && \
     chown -R seluser:seluser /home/seluser/.EasyOCR
 
