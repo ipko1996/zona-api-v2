@@ -1,5 +1,4 @@
 import gc
-import time
 
 from fastapi import HTTPException
 from selenium import webdriver
