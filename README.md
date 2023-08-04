@@ -45,9 +45,3 @@ Go to
 - / - an apple 🍎
 - /weekly_meal - the menu in json format
 - /weekly_meal/table - a nice table like format for the humans 🙆
-
-# Todos
-
-- [ ] Add more features
-- [ ] Add images next to the menu
-- [ ] Handle concurrency (background tasks)

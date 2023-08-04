@@ -1,6 +1,6 @@
 ARG PORT=443
 
-FROM selenium/standalone-chrome:latest
+FROM selenium/standalone-firefox:latest
 
 USER root
 
