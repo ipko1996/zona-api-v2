@@ -31,7 +31,7 @@ def get_element(xpath, driver, by=By.XPATH):
 def create_driver():
     logger.debug("create_driver 🌍")
     options = webdriver.FirefoxOptions()
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    # options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_argument("--disable-blink-features=AutomationControlled")
     # options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_argument("start-maximized")
