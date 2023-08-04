@@ -31,7 +31,7 @@ def get_element(xpath, driver, by=By.XPATH):
 
 def create_driver():
     logger.debug("create_driver 🌍")
-    options = webdriver.ChromeOptions()
+    options = webdriver.FirefoxOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_argument("--disable-blink-features=AutomationControlled")
     # options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -40,7 +40,7 @@ def create_driver():
     options.add_argument("--no-sandbox")
     # options.add_argument("--disable-dev-shm-usage")
 
-    return webdriver.Chrome(options=options)
+    return webdriver.Firefox(options=options)
 
 
 def get_this_weeks_zona_image_url():
