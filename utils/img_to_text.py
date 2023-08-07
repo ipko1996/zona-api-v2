@@ -5,6 +5,7 @@ import easyocr
 
 from unidecode import unidecode
 from loguru import logger
+from thefuzz import fuzz
 
 
 day_names = [
@@ -53,7 +54,8 @@ def get_meal_list(result):
             # find the day in the result
             while True:
                 temp = next(iterator)
-                if day in temp:
+                # we need fuzzy matching because the ocr is not perfect
+                if fuzz.ratio(day, temp) >= 60:
                     # logger.debug(day)
                     food = ""
                     price = ""
