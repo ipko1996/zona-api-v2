@@ -30,7 +30,6 @@ RUN wget -O /home/seluser/.EasyOCR/model/latin_g2.zip https://github.com/JaidedA
 
 RUN chown -R seluser:seluser /home/seluser/.EasyOCR
 
-# Copy the current directory content into the container's working directory
 COPY . .
 
 CMD uvicorn main:app --host 0.0.0.0 --port $PORT
