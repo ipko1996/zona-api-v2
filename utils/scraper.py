@@ -6,6 +6,8 @@ from selenium.common.exceptions import WebDriverException, InvalidSessionIdExcep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from loguru import logger
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 facebook_zona_url = "https://www.facebook.com/zonaetterem/"
@@ -43,7 +45,9 @@ def create_driver():
     options.add_argument("--dns-prefetch-disable")
     options.add_argument("--start-fullscreen")
 
-    return webdriver.Firefox(options=options)
+    return webdriver.Firefox(
+        service=FirefoxService(GeckoDriverManager().install()), options=options
+    )
 
 
 def get_this_weeks_zona_image_url():
