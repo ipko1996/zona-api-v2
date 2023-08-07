@@ -1,6 +1,6 @@
 ARG PORT=443
 
-FROM selenium/standalone-firefox:latest
+FROM selenium/standalone-firefox:116.0-geckodriver-0.33
 
 USER root
 
@@ -31,5 +31,7 @@ RUN wget -O /home/seluser/.EasyOCR/model/latin_g2.zip https://github.com/JaidedA
 RUN chown -R seluser:seluser /home/seluser/.EasyOCR
 
 COPY . .
+
+USER seluser
 
 CMD uvicorn main:app --host 0.0.0.0 --port $PORT
