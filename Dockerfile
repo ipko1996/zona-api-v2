@@ -32,4 +32,6 @@ RUN chown -R seluser:seluser /home/seluser/.EasyOCR
 
 COPY . .
 
+USER seluser
+
 CMD uvicorn main:app --host 0.0.0.0 --port $PORT
