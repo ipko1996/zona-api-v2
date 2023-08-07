@@ -29,7 +29,6 @@ RUN wget -O /home/seluser/.EasyOCR/model/latin_g2.zip https://github.com/JaidedA
     rm /home/seluser/.EasyOCR/model/latin_g2.zip
 
 RUN chown -R seluser:seluser /home/seluser/.EasyOCR
-RUN chown -R seluser:seluser /usr/local/bin
 
 COPY . .
 

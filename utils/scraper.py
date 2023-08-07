@@ -8,6 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from loguru import logger
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
+from os import path
 
 
 facebook_zona_url = "https://www.facebook.com/zonaetterem/"
@@ -46,7 +47,8 @@ def create_driver():
     options.add_argument("--start-fullscreen")
 
     return webdriver.Firefox(
-        service=FirefoxService(GeckoDriverManager().install()), options=options
+        service=FirefoxService(GeckoDriverManager().install(), log_path=path.devnull),
+        options=options,
     )
 
 
