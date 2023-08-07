@@ -32,12 +32,16 @@ def create_driver():
     logger.debug("create_driver 🌍")
     options = webdriver.FirefoxOptions()
     # options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    # options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--disable-blink-features=AutomationControlled")
     # options.add_experimental_option("excludeSwitches", ["enable-automation"])
     # options.add_argument("start-maximized")
     options.add_argument("--headless")
-    # options.add_argument("--no-sandbox")
-    # options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    options.set_preference("webdriver.log.driver", "OFF")
+    options.add_argument("--dns-prefetch-disable")
+    options.add_argument("--start-fullscreen")
 
     return webdriver.Firefox(options=options)
 
