@@ -1,6 +1,6 @@
 ARG PORT=443
 
-FROM selenium/standalone-firefox:111.0-geckodriver-0.33-20230403
+FROM selenium/standalone-firefox:114.0.1-geckodriver-0.33.0
 
 USER root
 
