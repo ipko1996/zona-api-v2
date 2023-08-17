@@ -10,8 +10,9 @@ from loguru import logger
 
 from utils.db import get_db
 from utils.img_to_text import get_meal_list, read_data
+from utils.metisz_scraper import get_metisz_menu
 from utils.scraper import get_this_weeks_zona_image_url
-from utils.week_model import Menu
+from utils.week_model import Menu, Restaurant
 
 app = FastAPI(
     docs_url="/docs",
@@ -76,16 +77,33 @@ def get_new_menu(current_week, db):
             + "Meanwhile here is a good youtube video: https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         )
 
-    meal_list = get_meal_list(read_data(url))
-    temp = {
-        "week": current_week,
+    zona_meal_list = get_meal_list(read_data(url))
+    zona_temp = {
+        # "week": current_week,
         "url": url,
-        "error_while_parsing": meal_list["error_while_parsing"]
-        if "error_while_parsing" in meal_list
+        "error_while_parsing": zona_meal_list["error_while_parsing"]
+        if "error_while_parsing" in zona_meal_list
         else False,
     }
-    for day, meals in meal_list.items():
-        temp[day] = meals
+    for day, meals in zona_meal_list.items():
+        zona_temp[day] = meals
+
+    metisz_meal_list = get_metisz_menu()
+    metisz_temp = {
+        # "week": current_week,
+        "url": metisz_meal_list["url"],
+        "error_while_parsing": metisz_meal_list["error_while_parsing"],
+    }
+    for day, meals in metisz_meal_list.items():
+        metisz_temp[day] = meals
+
+    temp = {
+        "METISZ": metisz_temp,
+        "ZONA": zona_temp,
+        "week": current_week,
+    }
+    logger.debug(f"temp: {temp}")
+
     logger.debug("updloading new menu to db 📤")
     new_menu_id = db["meals"].insert_one(temp)
     # new_menu = db["meals"].find_one({"_id": new_menu_id.inserted_id})
@@ -98,7 +116,7 @@ def read_root():
     return "alma"
 
 
-@app.get("/weekly_meal", response_model=Menu)
+@app.get("/weekly_meal", response_model=Restaurant)
 def get_weekly_meal():
     current_week = get_current_year_and_week_string()
     db = get_db()

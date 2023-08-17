@@ -17,4 +17,4 @@ def get_db():
             uri,
         )
         logger.debug("connected to db")
-    return mongo_client.zona
+    return mongo_client.ebedmano

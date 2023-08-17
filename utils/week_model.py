@@ -9,8 +9,6 @@ class FoodItem(BaseModel):
 
 
 class Menu(BaseModel):
-    _id: ObjectId
-    week: str = Field(alias="week")
     url: str
     HETFO: List[FoodItem]
     KEDD: List[FoodItem]
@@ -18,3 +16,10 @@ class Menu(BaseModel):
     CSUTORTOK: List[FoodItem]
     PENTEK: List[FoodItem]
     error_while_parsing: bool = False
+
+
+class Restaurant(BaseModel):
+    _id: ObjectId
+    METISZ: Menu
+    ZONA: Menu
+    week: str = Field(alias="week")

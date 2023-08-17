@@ -55,7 +55,7 @@ def get_meal_list(result):
             while True:
                 temp = next(iterator)
                 # we need fuzzy matching because the ocr is not perfect
-                if fuzz.ratio(day, temp) >= 60:
+                if fuzz.ratio(day, temp) >= 80:
                     # logger.debug(day)
                     food = ""
                     price = ""
